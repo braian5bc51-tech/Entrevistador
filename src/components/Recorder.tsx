@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 interface Props {
   onDone: (transcript: string) => void;
@@ -12,9 +12,9 @@ export default function Recorder({ onDone }: Props) {
   const [liveText, setLiveText] = useState('');
   const [supported, setSupported] = useState(true);
 
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const recognitionRef = useRef<any>(null);
   const accumulatedRef = useRef('');
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const timerRef = useRef<any>(null);
 
   useEffect(() => {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
@@ -39,7 +39,7 @@ export default function Recorder({ onDone }: Props) {
     recognition.continuous = true;
     recognition.interimResults = true;
     recognitionRef.current = recognition;
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
+    recognition.onresult = (event: any) => {
       let interim = '';
       for (let i = event.resultIndex; i < event.results.length; i++) {
         const result = event.results[i];
@@ -122,4 +122,4 @@ export default function Recorder({ onDone }: Props) {
       )}
     </div>
   );
-    }
+}
